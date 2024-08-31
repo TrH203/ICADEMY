@@ -25,16 +25,20 @@ function Register() {
         event.preventDefault();
 
         setErrors(RegisterValidation(values));
-        if (errors.email === "" &&
-            errors.password === "" &&
-            errors.name === "" &&
-            errors.re_password === "") {
-            axios.post('http://localhost:8081/register', values)
-                .then(res => console.log(res))
-                .catch(err => console.log(err));
-        }
+        SetIsSubmiting(true);
     }
 
+    useEffect(() => {
+        if (isSummiting) {
+            let isValid = Object.values(errors).every(error => error === "");
+
+            if (isValid) {
+                axios.post('http://localhost:8081/register', values)
+                    .then(res => console.log(res))
+                    .catch(err => console.log(err));
+            }
+        }
+    })
     return (
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
             <div className='bg-light p-4 rounded w-25 border border-dark'>
