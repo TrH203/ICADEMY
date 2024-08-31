@@ -1,0 +1,30 @@
+# Node.js / Express Backend
+backend/node_modules/
+backend/.env
+backend/logs/
+backend/*.log
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+backend/dist/
+backend/package-lock.json
+
+# React.js Frontend
+frontend/node_modules/
+frontend/.env
+frontend/build/
+frontend/dist/
+frontend/coverage/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.next/
+frontend/.nuxt/
+frontend/.cache/
+frontend/.vercel/
+frontend/.DS_Store
+frontend/package-lock.json
+# Ignore any lock files that might be in either folder
+package-lock.json
+yarn.lock
+
