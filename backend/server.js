@@ -24,16 +24,36 @@ app.post('/register', (req, res) => {
     const values = [
         name, email, password
     ]
-    console.log(name);
+    //console.log(name);
 
     db.query(sql, [values], (err, data) => {
+        console.log(sql);
         if (err) {
-            return res.json("ERROR");
+            return res.json(err);
         }
         return res.json(data);
     })
 })
 
+app.post('/login', (req, res) => {
+    const { email, password } = req.body;
+    const sql = "SELECT * FROM login WHERE email = ? AND password = ?";
+    const values = [
+        email, password
+    ];
+    //console.log(values);
+
+    db.query(sql, values, (err, data) => {
+        console.log(sql);
+        if (err) {
+            return res.json(err);
+        }
+        if (data.length != 0) {
+            return res.json("success");
+        }
+        return res.json("error");
+    })
+})
 app.listen(8081, () => {
     console.log("listening");
 })

@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "bootstrap"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import LoginValidation from "./validation/LoginValidation"
+import axios from 'axios'
+
 function Login() {
+    const navigate = useNavigate();
     const [values, setValues] = useState({
         email: '',
         password: '',
     });
+    const [isSummiting, setIsSubmiting] = useState(false);
 
     const [errors, setErrors] = useState({
         email: '',
@@ -19,7 +23,29 @@ function Login() {
     const handleSubmit = (event) => {
         event.preventDefault();
         setErrors(LoginValidation(values));
+        setIsSubmiting(true);
     }
+    const handleLogin = (res) => {
+        console.log(res.data);
+
+        if (res.data === "success") {
+            navigate('/home');
+        }
+
+    }
+    useEffect(() => {
+        if (isSummiting) {
+            let isValid = Object.values(errors).every(error => error === "");
+
+            if (isValid) {
+                axios.post('http://localhost:8081/login', values)
+                    .then(res => { handleLogin(res) })
+                    .catch(err => console.log(err));
+            }
+            setIsSubmiting(true);
+        }
+    })
+
     return (
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
             <div className='bg-light p-4 rounded w-25 border border-dark'>
