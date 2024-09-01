@@ -37,6 +37,7 @@ function Register() {
                     .then(res => console.log(res))
                     .catch(err => console.log(err));
             }
+            SetIsSubmiting(false);
         }
     })
     return (

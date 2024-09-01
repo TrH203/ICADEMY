@@ -1,0 +1,90 @@
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+}
+/* Brand name setting */
+.brand-name {
+  font-size: 50px;
+  text-align: center;
+  padding: 10px;
+  /* text-shadow: 5px 5px #ffde5942; */
+}
+/* Overlay Navigation */
+.overlay-nav {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 0.4s ease-in-out;
+  z-index: 1000;
+}
+
+.overlay-nav.open {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.overlay-nav ul {
+  list-style: none;
+  text-align: center;
+}
+
+.overlay-nav ul li {
+  margin: 20px 0;
+}
+
+.overlay-nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  transition: color 0.3s;
+}
+
+.overlay-nav ul li a:hover {
+  color: #ffde59;
+}
+
+/* Buttons */
+.open-btn,
+.close-btn {
+  font-size: 30px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  z-index: 1100;
+}
+
+.open-btn {
+  color: black;
+}
+
+.open-btn:hover {
+  color: #ffde59;
+}
+
+.close-btn {
+  color: white;
+  right: 40px;
+}
