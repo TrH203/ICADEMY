@@ -55,7 +55,7 @@ app.post('/login', (req, res) => {
         }
 
         if (data.length === 0) {
-            return res.status(400).json({ error: 'Login failed: Invalid email or password' });
+            return res.status(401).json({ error: 'Login failed: Invalid email or password' });
         }
 
         const user = data[0];

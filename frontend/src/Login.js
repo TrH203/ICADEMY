@@ -11,7 +11,7 @@ function Login() {
         password: '',
     });
     const [isSummiting, setIsSubmiting] = useState(false);
-
+    const [loginStatus, setLoginStatus] = useState("");
     const [errors, setErrors] = useState({
         email: '',
         password: ''
@@ -26,8 +26,8 @@ function Login() {
         setIsSubmiting(true);
     }
     const handleLogin = (res) => {
-        console.log(res.data);
-
+        //console.log(res.data);
+        setLoginStatus("");
         if (res.status === 200) {
             localStorage.setItem("token", res.data.token);
             navigate('/home');
@@ -41,7 +41,9 @@ function Login() {
             if (isValid) {
                 axios.post('http://localhost:8081/login', values)
                     .then(res => { handleLogin(res) })
-                    .catch(err => console.log(err));
+                    .catch(err => {
+                        setLoginStatus(err.response.data.error);
+                    });
             }
             setIsSubmiting(false);
         }
@@ -61,7 +63,7 @@ function Login() {
                         <label htmlFor='password'><strong>Password</strong></label>
                         <input onChange={handleInput} type='password' placeholder='Enter password' className='form-control rounded' name='password'></input>
                         {errors.password && <span className='text-danger fst-italic'>{errors.password}</span>}
-
+                        {loginStatus && <span className='text-danger fst-italic'>{loginStatus}</span>}
                     </div>
                     <button type='submit' className='btn btn-success w-100'><strong>Log in</strong></button>
                     <p>You are agree to our terms and policies</p>
