@@ -28,7 +28,8 @@ function Login() {
     const handleLogin = (res) => {
         console.log(res.data);
 
-        if (res.data === "success") {
+        if (res.status === 200) {
+            localStorage.setItem("token", res.data.token);
             navigate('/home');
         }
 
@@ -42,7 +43,7 @@ function Login() {
                     .then(res => { handleLogin(res) })
                     .catch(err => console.log(err));
             }
-            setIsSubmiting(true);
+            setIsSubmiting(false);
         }
     })
 
