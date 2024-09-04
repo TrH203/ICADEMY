@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import "bootstrap"
+
 import { Link, useNavigate } from 'react-router-dom'
 import LoginValidation from "./validation/LoginValidation"
 import axios from 'axios'

@@ -4,6 +4,8 @@ const express = require("express");
 const mysql = require("mysql");
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 
 const app = express();
 app.use(cors());
@@ -32,13 +34,89 @@ app.post('/register', (req, res) => {
     //console.log(name);
 
     db.query(sql, [values], (err, data) => {
-        console.log(sql);
+        //console.log(sql);
         if (err) {
-            return res.json(err);
+            if (err.code === 'ER_DUP_ENTRY') {
+                return res.status(400).json({ error: 'Email already exists' });
+            }
+            return res.status(500).json({ error: 'Database error' });
         }
-        return res.json(data);
+        return res.status(201).json({ message: 'User registered successfully' });
     })
 })
+
+
+app.post('/request-email-code', (req, res) => {
+    const { email } = req.body;
+
+    // Generate a 6-digit validation code
+    const validationCode = crypto.randomInt(100000, 999999).toString();
+
+    // Store the code in the database with the email
+    const sql = "INSERT INTO email_validation (email, code) VALUES (?, ?)";
+    db.query(sql, [email, validationCode], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        // Send email with the code
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: 'Your Validation Code',
+            text: `Your validation code is: ${validationCode}`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return res.status(500).json({ error: 'Failed to send email' });
+            }
+            res.json({ message: 'Validation code sent' });
+        });
+    });
+});
+
+app.post('/validate-email-code', (req, res) => {
+    const { email, code, name, password } = req.body;
+
+    // Check if the code matches
+    const sql = "SELECT * FROM email_validation WHERE email = ? AND code = ?";
+    db.query(sql, [email, code], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (results.length === 0) {
+            return res.status(400).json({ error: 'Invalid code' });
+        }
+
+        // Code is valid, complete the registration
+        const insertUserSql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        db.query(insertUserSql, [name, email, password], (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to register user' });
+            }
+
+            // Delete the validation code after successful registration
+            const deleteCodeSql = "DELETE FROM email_validation WHERE email = ?";
+            db.query(deleteCodeSql, [email], (err, result) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Failed to clean up validation code' });
+                }
+                res.json({ message: 'Registration successful' });
+            });
+        });
+    });
+});
+
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
@@ -49,7 +127,6 @@ app.post('/login', (req, res) => {
     //console.log(values);
 
     db.query(sql, values, (err, data) => {
-        console.log(sql);
         if (err) {
             return res.status(500).json({ error: 'Database query failed' });
         }
