@@ -64,15 +64,15 @@ html {
 /* Buttons */
 .open-btn,
 .close-btn {
-  font-size: 30px;
+  font-size: 25px;
   color: white;
   background-color: transparent;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   position: fixed;
-  top: 30px;
-  right: 30px;
+  top: 50px;
+  right: 10px;
   z-index: 1100;
 }
 
