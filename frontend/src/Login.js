@@ -52,7 +52,7 @@ function Login() {
     return (
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
             <div className='bg-light p-4 rounded w-25 border border-dark'>
-                <h2>Log in</h2>
+                <h2>ICADEMY Log in</h2>
                 <form action='' onSubmit={handleSubmit}>
                     <div className='mb-3'>
                         <label htmlFor='email'><strong>Email</strong></label>

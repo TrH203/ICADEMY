@@ -74,13 +74,17 @@ app.post('/request-email-code', (req, res) => {
             subject: 'Your Validation Code',
             text: `Your validation code is: ${validationCode}`
         };
+        try {
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return res.status(500).json({ error: 'Failed to send email' });
+                }
+                res.json({ error: 'Validation code sent' });
+            });
+        } catch (error) {
+            res.status(500).json({ error: "Failed to send email 1" })
+        }
 
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return res.status(500).json({ error: 'Failed to send email' });
-            }
-            res.json({ message: 'Validation code sent' });
-        });
     });
 });
 
@@ -180,7 +184,16 @@ app.get('/vm', authMiddleware, async (req, res) => {
     })
 });
 
+// Check if connection is successful
+db.connect((err) => {
+    if (err) {
+        console.error('Error connecting to the database:', err.message);
+    } else {
+        console.log('Connected to the MySQL database');
+    }
+});
+
 app.listen(8081, () => {
-    console.log("listening");
-})
+    console.log('Server running on port 8081');
+});
 

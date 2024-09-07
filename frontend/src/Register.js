@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Await, Link } from 'react-router-dom'
 import RegisterValidation from "./validation/RegisterValidation"
 import axios from 'axios'
 
@@ -13,6 +13,7 @@ function Register() {
     });
     const [isSummiting, SetIsSubmiting] = useState(false);
     const [isVerify, setIsVerify] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
     const [registerStatus, setRegisterStatus] = useState("");
 
     const [errors, setErrors] = useState({
@@ -32,11 +33,12 @@ function Register() {
         SetIsSubmiting(true);
     }
 
-    const handleVerify = (event) => {
+    const handleVerify = async (event) => {
         event.preventDefault();
-        console.log(values);
 
-        setIsVerify(false);
+        console.log(values);
+        setIsVerifying(true);
+
     }
 
     useEffect(() => {
@@ -44,22 +46,38 @@ function Register() {
             let isValid = Object.values(errors).every(error => error === "");
             setRegisterStatus("");
             if (isValid) {
-                axios.post('http://localhost:8081/register', values)
+                axios.post('http://localhost:8081/request-email-code', values)
                     .then(res => {
                         setIsVerify(true);
+                    })
+                    .catch(err => {
+                        setRegisterStatus(err.response.data.error);
+                        //console.log("no");
+
+                    });
+            }
+        }
+        SetIsSubmiting(false);
+
+        if (isVerifying) {
+            let isValid = Object.values(values).every(value => value !== "");
+            if (isValid) {
+                axios.post('http://localhost:8081/validate-email-code', values)
+                    .then(res => {
+                        navigator('/home');
                     })
                     .catch(err => {
                         setRegisterStatus(err.response.data.error);
                     });
             }
         }
-        SetIsSubmiting(false);
+        setIsVerifying(false);
 
     })
     return (
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
             <div className='bg-light p-4 rounded w-25 border border-dark'>
-                <h2>Register</h2>
+                <h2>ICADEMY Register</h2>
                 <form action='' onSubmit={handleSubmit}>
                     <div className='mb-3'>
                         <label htmlFor='name'><strong>Name</strong></label>
