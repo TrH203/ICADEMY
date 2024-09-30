@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Await, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import RegisterValidation from "./validation/RegisterValidation"
 import axios from 'axios'
 

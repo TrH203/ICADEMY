@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './css/Home.css';
-
+import TawkToWidget from './TawkToChat';
+import { Footer } from './components/HF';
 function Home() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -23,6 +24,8 @@ function Home() {
                     <li><a href="/vm">EDA Server</a></li>
                 </ul>
             </div>
+            <Footer/>
+            <TawkToWidget />
         </div>
     );
 }
