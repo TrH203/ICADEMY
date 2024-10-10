@@ -1,0 +1,53 @@
+.Container {
+    width: 300px;
+    height: 400px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    text-align: center;
+  }
+  
+  .Container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .Container h1 {
+    font-size: 36px;
+    color: #333333;
+    margin-bottom: 10px;
+  }
+  
+  .Container h2 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 5px;
+  }
+  
+  .Container h3 {
+    font-size: 18px;
+    color: #666666;
+    margin-bottom: 20px;
+  }
+  
+  .Container input[type="submit"] {
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .Container input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
