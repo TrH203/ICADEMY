@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import './css/Home.css';
 import TawkToWidget from './TawkToChat';
 import { Footer } from './components/HF';
+
 function Home() {
   return (
+    <>
     <div className="home">
       <header>
         <div className="logo">RDP Solutions</div>
@@ -21,21 +23,22 @@ function Home() {
           <Link to="/register" className="btn-register">Sign Up</Link>
         </div>
       </header>
+      
       <main className="main-content">
-      <section class="villian">
-      <div class="villian-content">
-                <h1>Welcome to our RDP Product Website</h1>
-                <p>Experience the power and convenience of our reliable RDP products.</p>
-                <div class="hero-buttons">
-                    <button class="btn-solid">Register</button>
-                    <button class="btn-outline">Login</button>
-                </div>
+        <section className="villian">
+          <div className="villian-content">
+            <h1>Welcome to our RDP Product Website</h1>
+            <p>Experience the power and convenience of our reliable RDP products.</p>
+            <div className="hero-buttons">
+              <button className="btn-solid">Register</button>
+              <button className="btn-outline">Login</button>
             </div>
-        
-            <div class="villian-image">
-               IMG
-            </div>
+          </div>
+          <div className="villian-image">
+            IMG
+          </div>
         </section>
+        
         <section className="hero">
           <div className="hero-content">
             <h1>Revolutionize Your Remote Work</h1>
@@ -46,6 +49,7 @@ function Home() {
             </div>
           </div>
         </section>
+        
         <section className="features">
           <h2>Why Choose Our RDP Solutions?</h2>
           <div className="feature-grid">
@@ -69,10 +73,15 @@ function Home() {
               <h3>24/7 Support</h3>
               <p>Round-the-clock assistance from our expert team.</p>
             </div>
-            <Footer/>
-            <TawkToWidget />
-        </div>
-    );
+          </div>
+        </section>
+      </main>
+      
+    </div>
+    <Footer />
+    <TawkToWidget />
+    </>
+  );
 }
 
 export default Home;
