@@ -7,13 +7,14 @@ import Payment from "./Payment"
 import VM from "./VM"
 import ProtectedRoute from './ProtectedRoute'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Login />}></Route>
+                <Route path='/' element={<Home />}></Route>
+                <Route path='/login' element={<Login />}></Route>
                 <Route path='/register' element={<Register />}></Route>
-                <Route path='/home' element={<Home />}></Route>
                 <Route
                     path="/payment"
                     element={

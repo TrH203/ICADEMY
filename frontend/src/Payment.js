@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './css/Payment.css';
 
 function Payment() {
   const handleSubmit = async (event) => {
@@ -13,9 +14,10 @@ function Payment() {
   };
 
   return (
-    <div>
-      <h1>Shoes</h1>
-      <h2>Buy For $25</h2>
+    <div className='Container'>
+      <h1>IC1</h1>
+      <h2>$25</h2>
+      <h3>ALL-IN-ONE</h3>
       <form onSubmit={handleSubmit}>
         <input type="submit" value="Buy" />
       </form>
